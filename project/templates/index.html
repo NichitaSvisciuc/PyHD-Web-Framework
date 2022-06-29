@@ -1,0 +1,19 @@
+<form method="POST">
+	{{ message }}<br><br>
+	Username:
+	<input name="name" type="text">
+	Password:
+	<input name="password1" type="password">
+	Password confirm:
+	<input name="password2" type="password">
+	<button type="submit">Submit</button>
+</form>
+
+<div>
+	Current user : {{ user.username }}<br>
+
+	Users:
+	{% for user in users %}
+		{{ user.username }}
+	{% endfor %}
+</div>

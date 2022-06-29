@@ -1,0 +1,2 @@
+class InexistentPath(Exception):
+	pass
