@@ -5,11 +5,11 @@ packages to install:
 - pip install peewee
 - pip install jinja2
 
-If you are familiar with django framework u will see here a lot of things from it
+If you are familiar with django framework u will see here a lot of similar things in this framework
 
 1. To create models go to project file and write the models code
-2. Run in the same directory in console - python migrate.py 
-3. In the same directory u will see main.py file, this is response controller or views as they're called in django write ur bussiness logic in them
+2. Run in the same directory in console - python migrate.py in order to apply models to database
+3. In the same directory u will see main.py file, this is response controller or views as they're called in django write ur bussiness logic there
 4. In PyHD/response.py u can check all aviable response functions below the main Response class
 5. In main directory a settings.py file is located, same as in django there are stored all core variables
 6. Account create function and User interface model are provided
