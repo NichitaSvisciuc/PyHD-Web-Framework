@@ -1,10 +1,18 @@
-import sys
+import sys, os
 sys.path.append('C:/projects/PyHDproject/PyHD-Web-Framework')
 from PyHD.model_managers.models import Query
-from project.models import AuthUser
 from PyHD.register_account_models.auth_models import User
 
+try:
+    from project.models import AuthUser
+except Exception as e:
+    pass
+
 from datetime import date
+
+import random
+import string
+import requests
 
 
 def create_user(
@@ -17,6 +25,7 @@ def create_user(
     is_authenticated=False,
     is_staff=False,
 ) -> None:
+    """ Creates a user instance with given credentials """
     safe_password = User.make_password(password)
 
     try:
@@ -46,6 +55,7 @@ def user_registration(
     is_active=True,
     is_authenticated=False,
 ) -> str:
+    """ Checks the validity of given credentials """
     usernames = [user.username for user in Query.all_objects(AuthUser)]
     if username in usernames:
         return 'Such username already exists, it must be unique'
@@ -62,3 +72,38 @@ def user_registration(
                     is_staff=False,
                     )
         return 'Created'
+
+
+def authenticate(username: str, password: str):
+    """ Returns a user instance if credentials are valid and it exists """
+    try:
+        users = Query.all_objects(AuthUser)
+
+        for user in users:
+            if user.username == username:
+                safe_password = User.make_password(password)
+                if safe_password == user.password:
+                    return user
+                else:
+                    return None
+            else:
+                return None
+    except ModuleNotFoundError:
+        print('Auth user model not implemented')
+
+
+def login(user, request=None):
+    """ Creates a session id and saves it to browser cookies """
+
+    if user is not None:
+
+        letters = string.ascii_letters
+        session_id = ''.join(random.choice(letters) for i in range(20))
+        print('session_id', session_id)
+
+        cookies = {'session_token': session_id}
+        r = requests.post('https://google.com', cookies=cookies)
+
+        s = requests.session()
+        cookie_obj = requests.cookies.create_cookie(domain="google.com", name="session_token", value=session_id)
+        s.cookies.set_cookie(cookie_obj)
