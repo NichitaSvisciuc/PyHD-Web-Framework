@@ -22,3 +22,4 @@ CORE_APP_DIRECTORY_URL = 'C:\\projects\\PyHDproject\\PyHD-Web-Framework'
 MIDDLEWARES = [
     CommonMiddleware,
 ]
+
